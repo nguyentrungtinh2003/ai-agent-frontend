@@ -1,0 +1,12 @@
+
+/* Đảm bảo sử dụng flexbox đúng cách */
+.flex-grow {
+  flex-grow: 1;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: calc(100% - 3.125rem); /* Dành không gian cho icon */
+}

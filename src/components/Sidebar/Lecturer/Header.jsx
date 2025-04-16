@@ -2,14 +2,14 @@ import React from 'react';
 
 const Header = () => {
   return (
-    <header className="bg-white px-4 py-3 shadow flex justify-between items-center">
+    <header className="bg-white px-4 py-3 shadow flex justify-between items-center border-b-1 border-gray-300">
       {/* Left Section */}
-      <div className="flex items-center gap-3 pl-2"> 
+      <div className="flex items-center gap-3 pl-1.5"> 
         {/* pl-16 giúp icon nằm cùng trục dọc với Sidebar (w-16) */}
-        <button className="text-xl text-gray-700 hover:text-blue-500">
+        <button className="text-2xl text-gray-700 hover:text-blue-500">
           ☰
         </button>
-        <h1 className="text-xl font-semibold text-gray-800 pl-3">
+        <h1 className="text-2xl font-semibold text-gray-800 pl-3">
           File Manager
         </h1>
       </div>
