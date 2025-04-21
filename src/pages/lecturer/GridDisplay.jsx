@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Sidebar from './SideBar';
+import Header from './Header';
 import { FaEllipsisH } from 'react-icons/fa'; // Import icon ellipsis
-import { FaArrowLeft  } from 'react-icons/fa'; // Mũi tên khi chưa chọn
+import { FaArrowLeft } from 'react-icons/fa'; // Mũi tên khi chưa chọn
 import "../../style/gridstyles.css";
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Hàm chuyển đổi dung lượng (size) từ MB sang GB nếu cần
 const formatSize = (size) => {
@@ -13,7 +15,7 @@ const formatSize = (size) => {
   return `${sizeInMB} MB`; // Dung lượng dưới 1000MB sẽ giữ nguyên MB
 };
 
-const GridDisplay = () => {
+const GridDisplay = ({ showSidebar }) => {
   const [showInfoPanel, setShowInfoPanel] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState(null);
 
@@ -40,113 +42,86 @@ const GridDisplay = () => {
   };
 
   return (
-    <div className="flex h-full w-full bg-gray-100">
-      <div className="w-16 bg-white text-white p-2 border-r-1 border-gray-300">
+<div className="flex grid-cols-12 bg-gray-100">
+  <AnimatePresence>
+    {showSidebar && (
+      <motion.div
+        key="sidebar"
+        initial={{ x: -300, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -300, opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeIn" }}
+        className="bg-white text-black p-3 border-r border-gray-300 col-span-1"
+      >
         <Sidebar />
-      </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
 
-      <div className="flex-1 grid grid-cols-12 gap-0 h-full">
-        <div className="col-span-2 bg-white text-red-600 p-2 border-r-1 border-gray-300">
-          <h2 className="text-xl font-bold text-black">Folders</h2>
-          <div className="grid grid-cols-1 gap-3 mt-4">
-            {folders.map((folder) => (
-              <div
-                key={folder.id}
-                onClick={() => handleFolderClick(folder)} // Xử lý khi click vào folder
-                className={`flex items-center justify-between bg-white p-3 rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300 ease-in-out relative ${selectedFolder?.id === folder.id ? 'bg-blue-100' : ''} cursor-pointer`} // Thêm class chọn folder và kiểu con chuột
-              >
-                <div className="flex items-start gap-3 flex-grow">
-                  <span className="text-xl">{folder.icon}</span>
-                  <div className="flex flex-col items-start flex-grow overflow-hidden">
-                    <h3 className="truncate font-medium">{folder.name}</h3>
-                    <span className="text-xs text-gray-500">
-                      {folder.items === 0
-                        ? '0 item' 
-                        : folder.items === 1
-                        ? '1 item' 
-                        : `${folder.items} items`}
-                      {' • '}
-                      {formatSize(folder.size)} 
-                    </span>
-                  </div>
-                </div>
-
-                <div className="absolute top-1/2 right-2 transform -translate-y-1/2 text-neutral-950 hover:text-red-700">
-                  <FaEllipsisH className="text-xl" />
+  <AnimatePresence>
+    <motion.div
+      key="mainContent"
+      initial={{ opacity: 0, x: showSidebar ? 250 : 0 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: showSidebar ? 250 : 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className={`grid grid-cols-11 gap-4 col-span-${showSidebar ? '11' : '12'} `} // Khi ẩn sidebar, MainContent chiếm 10 cột
+    >
+      {/* Cột bên trái: Folder List */}
+      <div className="col-span-2 bg-white text-red-600 p-2 border-r-1 border-gray-300 ">
+        <h2 className="text-xl font-bold text-black">Folders</h2>
+        <div className="grid grid-cols-1 gap-3 mt-4 max-h-full">
+          {folders.map((folder) => (
+            <div
+              key={folder.id}
+              onClick={() => handleFolderClick(folder)}
+              className={`flex items-center justify-between bg-white p-3 rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300 ease-in-out relative ${selectedFolder?.id === folder.id ? 'bg-blue-100' : ''} cursor-pointer`}
+            >
+              <div className="flex items-start gap-3 flex-grow">
+                <span className="text-xl">{folder.icon}</span>
+                <div className="flex flex-col items-start flex-grow overflow-hidden">
+                  <h3 className="truncate font-medium">{folder.name}</h3>
+                  <span className="text-xs text-gray-500">
+                    {folder.items === 0
+                      ? '0 item'
+                      : folder.items === 1
+                      ? '1 item'
+                      : `${folder.items} items`}
+                    {' • '}
+                    {formatSize(folder.size)}
+                  </span>
                 </div>
               </div>
-            ))}
+              <div className="absolute top-1/2 right-2 transform -translate-y-1/2 text-neutral-950 hover:text-red-700">
+                <FaEllipsisH className="text-xl" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Cột chính giữa: Main */}
+      <div className="col-span-7 bg-white text-black flex-grow">
+        <div className="w-full p-4">
+          <h2 className="text-2xl font-bold mb-4">Main Content</h2>
+          <div className="grid grid-cols-1 gap-4">
+            <div className="bg-gray-100 p-4 rounded-md shadow-md">
+              <p>This is sample content to represent the main area. It should occupy 7 columns in the grid layout.</p>
+            </div>
+            <div className="bg-gray-100 p-4 rounded-md shadow-md">
+              <p>Another sample content. You can add more content as needed here.</p>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className={`bg-white text-black ${showInfoPanel ? 'col-span-8' : 'col-span-10'}`}>
-
-        {/* Chia File Manager thành 3 phần theo chiều dọc */}
-        <div className="gap-0 border-r-1 border-gray-300">
-
-       {/* Phần Mũi tên và Chữ Back */}
-        <div className="p-4 rounded-t-lg border-b border-gray-300 flex flex-col items-start">
-            <div className="flex items-center mb-2 group hover:text-red-700 focus:outline-none bg-transparent">
-                {/* Mũi tên */}
-                <div className="mr-1 p-0">
-                    <FaArrowLeft size={16} />
-                </div>
-                {/* Chữ Back */}
-                <h3 className="font-medium text-lg pl-1">Back</h3>
-            </div>
-
-            {/* Phần tên Folder đã chọn nằm dưới chữ "Back" */}
-            <div className="flex items-center">
-                <span className="text-xl font-bold text-black">
-                    {selectedFolder?.name?.trim() || "No folder selected"}
-                </span>
-            </div>
-        </div>
-
-
-        {/* Khung Folder Info */}
-        <div className="row-span-1 p-4 border-b-1 border-gray-300">
-            <h3 className="font-bold">Folder Info</h3>
-            {selectedFolder ? (
-            <div>
-                <h4>{selectedFolder.name}</h4>
-                <p>Size: {formatSize(selectedFolder.size)}</p>
-                <p>Items: {selectedFolder.items}</p>
-            </div>
-            ) : (
-            <p>No folder selected</p>
-            )}
-        </div>
-
-        {/* Khung File List */}
-        <div className="row-span-8 p-4 rounded-b-lg">
-            <h3 className="font-bold">File List</h3>
-            {selectedFolder ? (
-            <div>
-                {files.map((file) => (
-                <div key={file.id} className="flex justify-between p-2 bg-gray-100 rounded-md">
-                    <span>{file.name}</span>
-                    <span>{formatSize(file.size)}</span>
-                </div>
-                ))}
-            </div>
-            ) : (
-            <p>Select a folder to see files</p>
-            )}
-        </div>
-
-        </div>
-        </div>
-
-
-
-
-
+      {/* Cột bên phải: Folder Information */}
+      <div className="col-span-2 bg-white text-black p-2 border-l border-gray-300 overflow-auto">
         {showInfoPanel && (
-          <div className="col-span-2 bg-yellow-500 text-white p-2 relative border-l border-gray-300">
+          <div className="bg-yellow-500 text-white p-2">
             <button
               onClick={() => setShowInfoPanel(false)}
-              className="absolute top-2 right-2 bg-black bg-opacity-30 px-2 py-1 rounded hover:bg-opacity-60"
+              className=" top-2 left-2 bg-black bg-opacity-30 px-2 py-1 rounded hover:bg-opacity-60"
             >
               ✕
             </button>
@@ -163,7 +138,11 @@ const GridDisplay = () => {
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
+  </AnimatePresence>
+</div>
+
+
   );
 };
 
