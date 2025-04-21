@@ -13,11 +13,6 @@ export default function App() {
 
   const [showSidebar, setShowSidebar] = useState(true); 
 
-  const toggleSidebar = () => {
-    setShowSidebar(prevState => !prevState); 
-  };
-
-
   return (
     <Router>
       <Routes>
@@ -30,8 +25,6 @@ export default function App() {
           <Route path="/file-manager" element={ 
             
             <div className="h-screen flex flex-col">
-            {/* Header */}
-            <Header toggleSidebar={toggleSidebar} /> {/* Truyền hàm toggleSidebar xuống Header */}
             {/* Main content */}
             <div className="flex flex-1 overflow-hidden">
               {/* Main grid area */}

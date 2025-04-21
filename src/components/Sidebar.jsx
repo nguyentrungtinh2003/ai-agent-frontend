@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, activeItem, onItemSelect }) => {
             }`}
             onClick={() => onItemSelect("home")}
           >
-            <TiHomeOutline />
+            <TiHomeOutline size={25}/>
           </li>
           <li
             className={`flex items-center p-2 rounded-lg cursor-pointer ${
@@ -31,7 +31,7 @@ const Sidebar = ({ isOpen, activeItem, onItemSelect }) => {
             }`}
             onClick={() => onItemSelect("document")}
           >
-            <TiDocument />
+            <TiDocument size={25}/>
           </li>
           <li
             className={`flex items-center p-2 rounded-lg cursor-pointer ${
@@ -39,7 +39,7 @@ const Sidebar = ({ isOpen, activeItem, onItemSelect }) => {
             }`}
             onClick={() => onItemSelect("faq")}
           >
-            <TbUserQuestion />
+            <TbUserQuestion size={25} />
           </li>
           <li
             className={`flex items-center p-2 rounded-lg cursor-pointer ${
@@ -47,7 +47,7 @@ const Sidebar = ({ isOpen, activeItem, onItemSelect }) => {
             }`}
             onClick={() => onItemSelect("settings")}
           >
-            <TbSettings />
+            <TbSettings size={25}/>
           </li>
         </ul>
       </div>

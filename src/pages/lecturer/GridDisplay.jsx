@@ -5,6 +5,7 @@ import { FaEllipsisH } from 'react-icons/fa'; // Import icon ellipsis
 import { FaArrowLeft } from 'react-icons/fa'; // Mũi tên khi chưa chọn
 import "../../style/gridstyles.css";
 import { motion, AnimatePresence } from 'framer-motion';
+import Layout from '../../components/Layout';
 
 // Hàm chuyển đổi dung lượng (size) từ MB sang GB nếu cần
 const formatSize = (size) => {
@@ -42,22 +43,8 @@ const GridDisplay = ({ showSidebar }) => {
   };
 
   return (
+<Layout>
 <div className="flex grid-cols-12 bg-gray-100">
-  <AnimatePresence>
-    {showSidebar && (
-      <motion.div
-        key="sidebar"
-        initial={{ x: -300, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        exit={{ x: -300, opacity: 0 }}
-        transition={{ duration: 0.5, ease: "easeIn" }}
-        className="bg-white text-black p-3 border-r border-gray-300 col-span-1"
-      >
-        <Sidebar />
-      </motion.div>
-    )}
-  </AnimatePresence>
-
   <AnimatePresence>
     <motion.div
       key="mainContent"
@@ -141,6 +128,7 @@ const GridDisplay = ({ showSidebar }) => {
     </motion.div>
   </AnimatePresence>
 </div>
+</Layout>
 
 
   );
