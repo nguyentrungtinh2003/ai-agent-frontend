@@ -6,6 +6,7 @@ import ForgotPasswordForm from "./pages/auth/ForgotPasswordForm";
 import ResetPasswordForm from "./pages/auth/ResetPasswordForm";
 import GridDisplay from "./pages/lecturer/GridDisplay"
 import Header from "./pages/lecturer/Header"
+import HomePage from "./pages/lecturer/HomePage";
 
 
 export default function App() {
@@ -25,7 +26,9 @@ export default function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route path="/reset-password" element={<ResetPasswordForm />} />
+          <Route path="/home" element={<HomePage/>} />
           <Route path="/file-manager" element={ 
+            
             <div className="h-screen flex flex-col">
             {/* Header */}
             <Header toggleSidebar={toggleSidebar} /> {/* Truyền hàm toggleSidebar xuống Header */}

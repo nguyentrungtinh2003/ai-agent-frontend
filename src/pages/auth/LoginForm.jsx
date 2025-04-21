@@ -5,6 +5,7 @@ import { PiEye, PiEyeClosed } from "react-icons/pi";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
@@ -30,15 +31,18 @@ const LoginForm = () => {
             className='focus:outline-rose-400 placeholder-gray-400 font-semibold px-6 border-2 border-gray-300 h-14 rounded-xl w-full'
             type={showPassword ? 'text' : 'password'}
             placeholder='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
+          {password && (
           <div
             onClick={togglePasswordVisibility}
             className='absolute top-5 right-5 cursor-pointer'
           >
             {showPassword ? <PiEyeClosed fontSize={20} /> : <PiEye fontSize={20} />}
           </div>
+          )}
         </div>
-
         {/* Điều hướng khi click */}
         <p
           onClick={() => navigate('/forgot-password')}
