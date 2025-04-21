@@ -1,11 +1,58 @@
 import React from "react";
+import {
+  TiHomeOutline,
+  TiDocument,
+} from "react-icons/ti";
+import {
+  TbUserQuestion,
+  TbSettings,
+} from "react-icons/tb";
 
-export default function Sidebar() {
+const Sidebar = ({ isOpen, activeItem, onItemSelect }) => {
   return (
-    <div className="w-64 bg-gray-800 text-white p-4">
-      <h1 className="text-xl font-bold mb-4">Dashboard</h1>
-      <ul className="space-y-2">
-      </ul>
+    <div
+      className={`h-full bg-[#FFFAFA] text-white transition-all duration-300 overflow-hidden ${
+        isOpen ? "w-14" : "w-0"
+      }`}
+    >
+      <div className="flex flex-col items-center mt-4">
+        <ul className="space-y-4 text-xl text-gray-500 flex flex-col">
+          <li
+            className={`flex items-center p-2 rounded-lg cursor-pointer ${
+              activeItem === "home" ? "bg-[#DFDFDF]" : ""
+            }`}
+            onClick={() => onItemSelect("home")}
+          >
+            <TiHomeOutline />
+          </li>
+          <li
+            className={`flex items-center p-2 rounded-lg cursor-pointer ${
+              activeItem === "document" ? "bg-[#DFDFDF]" : ""
+            }`}
+            onClick={() => onItemSelect("document")}
+          >
+            <TiDocument />
+          </li>
+          <li
+            className={`flex items-center p-2 rounded-lg cursor-pointer ${
+              activeItem === "faq" ? "bg-[#DFDFDF]" : ""
+            }`}
+            onClick={() => onItemSelect("faq")}
+          >
+            <TbUserQuestion />
+          </li>
+          <li
+            className={`flex items-center p-2 rounded-lg cursor-pointer ${
+              activeItem === "settings" ? "bg-[#DFDFDF]" : ""
+            }`}
+            onClick={() => onItemSelect("settings")}
+          >
+            <TbSettings />
+          </li>
+        </ul>
+      </div>
     </div>
   );
-}
+};
+
+export default Sidebar;
