@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import LoginForm from "./pages/auth/LoginForm";
 import RegisterForm from "./pages/auth/RegisterForm";
 import ForgotPasswordForm from "./pages/auth/ForgotPasswordForm";
@@ -25,7 +24,6 @@ export default function App() {
             <div className="h-screen flex flex-col">
             {/* Header */}
             <Header />
-        
             {/* Main content */}
             <div className="flex flex-1 overflow-hidden">
               {/* Main grid area */}
